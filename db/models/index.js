@@ -13,6 +13,6 @@ const sequelize = new Sequelize(DATABASE_URL, {
 const db = {};
 db.Sequelize = sequelize;
 db.sequelize = sequelize;
-
+db.roles = require('./roles.model')(sequelize,Sequelize);
 module.exports = db;
 
