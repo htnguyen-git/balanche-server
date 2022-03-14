@@ -1,3 +1,4 @@
+require('dotenv').config();
 const express = require("express");
 const bodyParser = require("body-parser");
 const cors = require("cors");
@@ -16,6 +17,7 @@ app.get("/", (req, res) => {
 });
 // set port, listen for requests
 const PORT = process.env.PORT || 8080;
+console.log(process.env.DATABASE_URL)
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}.`);
 });
