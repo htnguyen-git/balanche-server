@@ -14,6 +14,9 @@ const UserRoles = sequelize.define("userRoles", {
     roleId: {
         type: Sequelize.INTEGER,
     },
+    deletedAt: {
+        type: Sequelize.DATE
+    }
 
 })
 module.exports = UserRoles;

@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+const userRolesController = require('../controller/userRoles.controller');
 
 // middleware that is specific to this router
 router.use((req, res, next) => {
@@ -7,8 +8,7 @@ router.use((req, res, next) => {
     next()
 });
 // define the homepage route
-router.get('/', (req, res) => {
-    res.json({ message: "User role page" })
-});
-
+router.get('/seed', userRolesController.seed);
+router.get('/', userRolesController.getAll);
+router.patch('/', userRolesController.update);
 module.exports = router

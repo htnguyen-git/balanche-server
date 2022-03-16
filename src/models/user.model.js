@@ -43,9 +43,6 @@ const Users = sequelize.define("users", {
     isActivate: {
         type: Sequelize.INTEGER
     },
-    updatedAt: {
-        type: Sequelize.DATE
-    },
     deletedAt: {
         type: Sequelize.DATE
     }

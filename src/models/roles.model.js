@@ -9,6 +9,9 @@ const Roles = sequelize.define("roles", {
     },
     name: {
         type: Sequelize.STRING
+    },
+    deletedAt: {
+        type: Sequelize.DATE
     }
 })
 module.exports = Roles;
