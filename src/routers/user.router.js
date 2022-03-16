@@ -10,11 +10,10 @@ router.use((req, res, next) => {
 router.get('/seed', userController.seed);
 
 router.get('/', userController.getAll);
-router.get('/:id', userController.get);
 router.post('/register', userController.register);
 router.post('/login', userController.login);
-router.get('/logout', userController.logout);
-router.get('/:id', userController.deactive);
+router.get('/activate/:id', userController.activate);
+router.get('/deactivate/:id', userController.deactive);
 router.delete('/:id', userController.remove);
 router.patch('/:id', userController.update);
 
