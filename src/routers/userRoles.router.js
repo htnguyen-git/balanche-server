@@ -10,5 +10,5 @@ router.use((req, res, next) => {
 // define the homepage route
 router.get('/seed', userRolesController.seed);
 router.get('/', userRolesController.getAll);
-router.patch('/', userRolesController.update);
+router.patch('/:id', userRolesController.update);
 module.exports = router
