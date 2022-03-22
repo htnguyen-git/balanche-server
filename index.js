@@ -16,6 +16,7 @@ app.get("/", (req, res) => {
 app.use('/role', require('./src/routers/roles.router'));
 app.use('/user', require('./src/routers/user.router'));
 app.use('/userRoles', require('./src/routers/userRoles.router'));
+app.use('/quests', require('./src/routers/quest.router'));
 
 const PORT = process.env.PORT || 8080;
 app.listen(PORT, () => {
