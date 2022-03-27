@@ -32,7 +32,7 @@ const seed = () => {
             email: "mail2@gmail.com",
             timeZone: "GMT +7",
             phone: "0222222222",
-            isActivate: 2,
+            isActivate: 1,
             deletedAt: null,
             createdAt: getCurrentDate(),
             updatedAt: getCurrentDate(),
