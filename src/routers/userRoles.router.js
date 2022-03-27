@@ -7,8 +7,9 @@ router.use((req, res, next) => {
     console.log('Time: ', Date.now(), " Router: userRoles")
     next()
 });
-// define the homepage route
-router.get('/seed', userRolesController.seed);
+
+
 router.get('/', userRolesController.getAll);
 router.patch('/:id', userRolesController.update);
-module.exports = router
+
+module.exports = router;

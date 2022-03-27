@@ -1,22 +1,5 @@
-const { userRolesContext, sequelize } = require('../models/index');
-const seed = async (req, res) => {
-    const roles = [
-        {
-            userId: 1,
-            roleId: 1
-        },
-        {
-            userId: 2,
-            roleId: 1
-        },
-        {
-            userId: 2,
-            roleId: 2
-        }
-    ];
-    const data = await userRolesContext.bulkCreate(roles)
-    res.status(200).json(data)
-};
+const { sequelize } = require('../models/index');
+const { getCurrentDate } = require('../utilities/date');
 
 const getAll = async (req, res) => {
     console.log("getall")
@@ -58,9 +41,8 @@ const update = async (req, res) => {
         res.status(500).json({ message: error.toString() || "Some error occured when update userRoles" })
     }
 }
-const getCurrentDate = () => new Date(Date.now()).toISOString();
+
 module.exports = {
-    seed,
     getAll,
     update
 }

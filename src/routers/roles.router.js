@@ -7,10 +7,10 @@ router.use((req, res, next) => {
     console.log('Time: ', Date.now(), " Router: roles")
     next()
 });
-router.get('/seed', roleController.seed);
+
 router.get('/getAll', roleController.getAll);
 router.put('/', roleController.add);
 router.delete('/:id', roleController.remove);
 
 
-module.exports = router
+module.exports = router;

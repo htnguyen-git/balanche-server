@@ -1,14 +1,7 @@
 const { sequelize, rolesContext, Sequelize } = require('../models/index');
 const { QueryTypes } = require('sequelize')
-const seed = async (req, res) => {
-    const roles = [
-        { name: "user" },
-        { name: "admin" },
-        { name: "moderator" },
-    ]
-    const data = await rolesContext.bulkCreate(roles);
-    res.status(200).json(data)
-};
+const { getCurrentDate } = require('../utilities/date');
+
 const getAll = async (req, res) => {
     try {
         const queryStr = `SELECT * FROM roles WHERE "deletedAt" is NULL;`;
@@ -58,10 +51,7 @@ const remove = async (req, res) => {
 
 };
 
-const getCurrentDate = () => new Date(Date.now()).toISOString();
-
 module.exports = {
-    seed,
     getAll,
     add,
     remove

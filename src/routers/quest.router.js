@@ -14,6 +14,6 @@ router.patch('/:id', questController.update);
 router.delete('/:id', questController.remove);
 router.get('/export', questController.exportQuest);
 router.post('/import', questController.importQuest);
-router.get('/seed', questController.seed);
-router.post('/markDone/:id', questController.markDone)
-module.exports = router
+router.post('/markDone/:id', questController.markDone);
+
+module.exports = router;

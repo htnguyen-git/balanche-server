@@ -1,46 +1,6 @@
-const { sequelize, questContext } = require('../models/index');
-const seed = async (req, res) => {
-    const data = [
-        {
-            title: "title1",
-            group: "group1",
-            startTime: getCurrentDate(),
-            endTime: getCurrentDate(),
-            place: "this is place of title 1",
-            howToComPlete: "This is the way to complete task title 1",
-            createdAt: getCurrentDate(),
-            updatedAt: getCurrentDate(),
-            completedAt: null,
-            deletedAt: null
-        },
-        {
-            title: "title2",
-            group: "group2",
-            startTime: getCurrentDate(),
-            endTime: getCurrentDate(),
-            place: "this is place of title 2",
-            howToComPlete: "This is the way to complete task title 2",
-            createdAt: getCurrentDate(),
-            updatedAt: getCurrentDate(),
-            completedAt: null,
-            deletedAt: null
-        },
-        {
-            title: "title3",
-            group: "group1",
-            startTime: getCurrentDate(),
-            endTime: getCurrentDate(),
-            place: "this is place of title 3",
-            howToComPlete: "This is the way to complete task title 3",
-            createdAt: getCurrentDate(),
-            updatedAt: getCurrentDate(),
-            completedAt: null,
-            deletedAt: null
-        },
-    ];
-    const results = await questContext.bulkCreate(data)
-    res.status(200).json(results)
-}
+const { sequelize } = require('../models/index');
+const { getCurrentDate } = require('../utilities/date');
+
 const getAll = async (req, res) => {
     const queryStr = 'SELECT * FROM "quests"'
         + ' WHERE "deletedAt" IS NULL'
@@ -115,6 +75,7 @@ const remove = async (req, res) => {
         ? res.status(200).json({ message: `Update quest with id = ${req.params.id} successfully` })
         : res.status(200).json({ message: `Update quest with id = ${req.params.id} failed` })
 };
+
 const markDone = async (req, res) => {
     const queryStr = 'UPDATE "quests"'
         + ' SET "completedAt" =:completedAt'
@@ -133,16 +94,16 @@ const markDone = async (req, res) => {
     }
 
 };
+
 const exportQuest = async (req, res) => {
 
 };
+
 const importQuest = async (req, res) => {
 
 };
-const getCurrentDate = () => new Date(Date.now()).toISOString();
 
 module.exports = {
-    seed,
     getAll,
     add,
     update,

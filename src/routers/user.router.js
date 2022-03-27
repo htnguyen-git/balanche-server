@@ -7,11 +7,7 @@ router.use((req, res, next) => {
     next()
 });
 
-router.get('/seed', userController.seed);
-
 router.get('/', userController.getAll);
-router.post('/register', userController.register);
-router.post('/login', userController.login);
 router.get('/activate/:id', userController.activate);
 router.get('/deactivate/:id', userController.deactive);
 router.delete('/:id', userController.remove);
