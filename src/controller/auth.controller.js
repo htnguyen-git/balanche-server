@@ -2,7 +2,6 @@ const hashProvider = require('../utilities/hashProvider');
 const { sequelize } = require("../models/index");
 const jwt = require("jsonwebtoken");
 const { getCurrentDate } = require('../utilities/date');
-const { hash } = require('bcrypt');
 
 const authConfig = {
     AUTH_SECRECT_KEY: process.env.AUTH_SECRECT_KEY,
@@ -14,7 +13,7 @@ const errMsg = {
 
 const signIn = async (req, res) => {
     try {
-        const userInfoFromRequest = getUserInfoFromRequest(req);
+        const userInfoFromRequest = getSignInForm(req);
         const userInfoFromDatabase = await findUserByEmail(userInfoFromRequest);
         const isPasswordCorrect = userInfoFromDatabase && hashProvider.compare(userInfoFromRequest.password, userInfoFromDatabase.password);
         return isPasswordCorrect
@@ -36,19 +35,7 @@ const signIn = async (req, res) => {
     }
 };
 
-const signUp = async (req, res) => {
-    try {
-        const userInfoFromRequest = getUserInfoFromRequest(req);
-        const isAddSucessfully = await checkThenInsertNewUserToDatabase(userInfoFromRequest);
-        isAddSucessfully
-            ? res.status(200).json({ message: "Register successfully" })
-            : res.status(200).json({ message: "Email is already taken" })
-    } catch (error) {
-        res.status(500).json({ message: error.toString() || "Some error occured when register user" })
-    }
-};
-
-const getUserInfoFromRequest = (req) => {
+const getSignInForm = (req) => {
     const email = req.body.email;
     const password = req.body.password;
     return { email, password };
@@ -87,16 +74,40 @@ const getRolesFromDatabase = async ({ email }) => {
     return results;
 };
 
-const checkThenInsertNewUserToDatabase = async ({ email, password }) => {
+const signUp = async (req, res) => {
+    try {
+        const signUppForm = getSignUpForm(req);
+        const isAddSucessfully = await checkThenInsertNewUserToDatabase(signUppForm);
+        isAddSucessfully
+            ? res.status(200).json({ message: "Register successfully" })
+            : res.status(200).json({ message: "Email is already taken" })
+    } catch (error) {
+        res.status(500).json({ message: error.toString() || "Some error occured when register user" })
+    }
+};
+
+const getSignUpForm = (req) => {
+    const email = req.body.email;
+    const password = req.body.password;
+    const firstName = req.body.firstName;
+    const lastName = req.body.lastName;
+    const name = firstName && lastName && firstName.trim() + ' ' + lastName.trim();
+    return { email, password, firstName, lastName, name }
+}
+
+const checkThenInsertNewUserToDatabase = async ({ email, password, firstName, lastName, name }) => {
     const queryStr = 'INSERT INTO'
-        + ' users ("email","password","isActivate","createdAt","updatedAt")'
-        + ' SELECT :email, :password, :isActivate, :currentDate, :currentDate'
+        + ' users ("email","password", "name", "firstName", "lastName","isActivate","createdAt","updatedAt")'
+        + ' SELECT :email, :password, :firstName, :lastName, :name, :isActivate, :currentDate, :currentDate'
         + ' WHERE NOT EXISTS ( SELECT 1 FROM "users" WHERE "email" = :email AND "deletedAt" IS NULL)'
         ;
     const [results, metadata] = await sequelize.query(queryStr, {
         replacements: {
             email: email,
             password: hashProvider.hash(password),
+            firstName: firstName,
+            lastName: lastName,
+            name: name,
             isActivate: 0,
             currentDate: getCurrentDate()
         }
