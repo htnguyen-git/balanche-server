@@ -78,11 +78,11 @@ const signUp = async (req, res) => {
     try {
         const signUppForm = getSignUpForm(req);
         const isAddSucessfully = await checkThenInsertNewUserToDatabase(signUppForm);
-        isAddSucessfully
+        return isAddSucessfully
             ? res.status(200).json({ message: "Register successfully" })
             : res.status(200).json({ message: "Email is already taken" })
     } catch (error) {
-        res.status(500).json({ message: error.toString() || "Some error occured when register user" })
+        return res.status(500).json({ message: error.toString() || "Some error occured when register user" })
     }
 };
 
