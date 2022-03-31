@@ -7,8 +7,12 @@ const authConfig = {
     AUTH_SECRECT_KEY: process.env.AUTH_SECRECT_KEY,
     EXPIRED_TIME: 24 * 60 * 60
 };
-const errMsg = {
-    EMAIL_OR_PASSWORD_INVALID: "Email or password is invalid"
+const msg = {
+    EMAIL_OR_PASSWORD_INVALID: "Email or password is invalid",
+    ERROR_WHEN_SIGN_IN: "Some error occured when sign in ",
+    REGISTER_SUCCESS: "Register successfully",
+    EMAIL_IS_TAKEN: "Email is already taken",
+    ERROR_WHEN_REGISTER: "Some error occured when register user"
 };
 
 const signIn = async (req, res) => {
@@ -24,14 +28,14 @@ const signIn = async (req, res) => {
                 roles: await getRolesFromDatabase(userInfoFromRequest),
                 accessToken: jwt.sign({ id: userInfoFromDatabase.id }, authConfig.AUTH_SECRECT_KEY, { expiresIn: authConfig.EXPIRED_TIME })
             })
-            : res.status(200).json(
+            : res.status(401).json(
                 {
-                    message: errMsg.EMAIL_OR_PASSWORD_INVALID,
+                    message: msg.EMAIL_OR_PASSWORD_INVALID,
                     accessToken: null
                 }
             )
     } catch (error) {
-        return res.status(500).json({ error: error.toString() })
+        return res.status(500).json({ error: error.toString() || msg.ERROR_WHEN_SIGN_IN })
     }
 };
 
@@ -79,10 +83,10 @@ const signUp = async (req, res) => {
         const signUppForm = getSignUpForm(req);
         const isAddSucessfully = await checkThenInsertNewUserToDatabase(signUppForm);
         return isAddSucessfully
-            ? res.status(200).json({ message: "Register successfully" })
-            : res.status(200).json({ message: "Email is already taken" })
+            ? res.status(201).json({ message: msg.REGISTER_SUCCESS })
+            : res.status(409).json({ message: msg.EMAIL_IS_TAKEN })
     } catch (error) {
-        return res.status(500).json({ message: error.toString() || "Some error occured when register user" })
+        return res.status(500).json({ message: error.toString() || msg.ERROR_WHEN_REGISTER })
     }
 };
 
