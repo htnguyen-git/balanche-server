@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 
-const questController = require('../controller/quest.controller');
+const questController = require('../controller/quest/index')
 const auth = require('../middleware/auth.middleware');
 // middleware that is specific to this router
 router.use((req, res, next) => {
@@ -13,8 +13,8 @@ router.get('/', [auth.verifyToken, auth.isNormalUser], questController.getAll);
 router.post('/', [auth.verifyToken, auth.isNormalUser], questController.add);
 router.patch('/:id', [auth.verifyToken, auth.isNormalUser], questController.update);
 router.delete('/:id', [auth.verifyToken, auth.isNormalUser], questController.remove);
-router.get('/export', [auth.verifyToken, auth.isNormalUser], questController.exportQuest);
-router.post('/import', [auth.verifyToken, auth.isNormalUser], questController.importQuest);
+// router.get('/export', [auth.verifyToken, auth.isNormalUser], questController.exportQuest);
+// router.post('/import', [auth.verifyToken, auth.isNormalUser], questController.importQuest);
 router.post('/markDone/:id', [auth.verifyToken, auth.isNormalUser], questController.markDone);
 
 module.exports = router;
