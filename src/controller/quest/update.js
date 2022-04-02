@@ -16,6 +16,7 @@ const update = async (req, res) => {
 };
 
 const getInfoFromRequest = (req) => {
+    const userId = req.userId;
     const id = req.params.id;
     const title = req.body.title;
     const group = req.body.group;
@@ -24,9 +25,9 @@ const getInfoFromRequest = (req) => {
     const place = req.body.place;
     const howToComPlete = req.body.howToComPlete;
     const completedAt = req.body.completedAt;
-    return { id, title, group, startTime, endTime, place, howToComPlete, completedAt };
+    return { id, userId, title, group, startTime, endTime, place, howToComPlete, completedAt };
 };
-const executeQuery = async ({ id, title, group, startTime, endTime, place, howToComPlete, completedAt }) => {
+const executeQuery = async ({ id, userId, title, group, startTime, endTime, place, howToComPlete, completedAt }) => {
     const queryStr = 'UPDATE "quests"'
         + ' SET  '
         + '     "title" = :title,'
@@ -39,6 +40,8 @@ const executeQuery = async ({ id, title, group, startTime, endTime, place, howTo
         + '     "deletedAt" = :deletedAt,'
         + '     "updatedAt" = :currentDate'
         + ' WHERE "id" =:id'
+        + ' AND "userId" =:userId'
+        + ' AND "deletedAt" IS NULL'
         ;
     const [results, metadata] = await sequelize.query(queryStr, {
         replacements: {
@@ -51,7 +54,8 @@ const executeQuery = async ({ id, title, group, startTime, endTime, place, howTo
             completedAt: completedAt,
             deletedAt: null,
             currentDate: getCurrentDate(),
-            id: id
+            id: id,
+            userId: userId
         }
     });
     return metadata;

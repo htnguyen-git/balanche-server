@@ -7,6 +7,9 @@ const Quests = sequelize.define("quests", {
         primaryKey: true,
         autoIncrement: true,
     },
+    userId: {
+        type: Sequelize.INTEGER,
+    },
     title: {
         type: Sequelize.STRING
     },

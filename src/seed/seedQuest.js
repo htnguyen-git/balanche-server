@@ -3,6 +3,7 @@ const { questContext } = require('../models/index');
 const seed = () => {
     questContext.bulkCreate([
         {
+            userId: 1,
             title: "title1",
             group: "group1",
             startTime: getCurrentDate(),
@@ -15,6 +16,7 @@ const seed = () => {
             deletedAt: null
         },
         {
+            userId: 2,
             title: "title2",
             group: "group2",
             startTime: getCurrentDate(),
@@ -27,6 +29,7 @@ const seed = () => {
             deletedAt: null
         },
         {
+            userId: 2,
             title: "title3",
             group: "group1",
             startTime: getCurrentDate(),
