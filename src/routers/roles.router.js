@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 
-const roleController = require('../controller/roles.controller');
+const roleController = require('../controller/roles/index');
 const auth = require('../middleware/auth.middleware')
 // middleware that is specific to this router
 router.use((req, res, next) => {
