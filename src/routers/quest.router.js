@@ -15,6 +15,6 @@ router.patch('/:id', [auth.verifyToken, auth.isNormalUser], questController.upda
 router.delete('/:id', [auth.verifyToken, auth.isNormalUser], questController.remove);
 // router.get('/export', [auth.verifyToken, auth.isNormalUser], questController.exportQuest);
 // router.post('/import', [auth.verifyToken, auth.isNormalUser], questController.importQuest);
-router.post('/markDone/:id', [auth.verifyToken, auth.isNormalUser], questController.markDone);
+router.post('/markDone/', [auth.verifyToken, auth.isNormalUser], questController.markDone);
 
 module.exports = router;
