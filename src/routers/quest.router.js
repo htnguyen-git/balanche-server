@@ -16,5 +16,6 @@ router.delete('/:id', [auth.verifyToken, auth.isNormalUser], questController.rem
 // router.get('/export', [auth.verifyToken, auth.isNormalUser], questController.exportQuest);
 // router.post('/import', [auth.verifyToken, auth.isNormalUser], questController.importQuest);
 router.post('/markDone/', [auth.verifyToken, auth.isNormalUser], questController.markDone);
+router.get('/getUndone', [auth.verifyToken, auth.isNormalUser], questController.getUnDone);
 
 module.exports = router;
