@@ -4,6 +4,7 @@ const deactivate = require('./deactivate');
 const remove = require('./remove');
 const update = require('./update');
 const changePassword = require('./changePassword');
+const getFullInfo = require('./getFullInfo');
 
 module.exports = {
     getAll,
@@ -11,5 +12,6 @@ module.exports = {
     deactivate,
     remove,
     update,
-    changePassword
+    changePassword,
+    getFullInfo,
 }
