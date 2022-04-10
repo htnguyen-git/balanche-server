@@ -8,6 +8,7 @@ const db = require("./src/models/index");
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(bodyParser.json({ limit: '50mb' }));
 
 app.get("/", (req, res) => {
   res.json({ message: "Welcome to balanche server application." });
