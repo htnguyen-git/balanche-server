@@ -1,5 +1,6 @@
 const sequelize = require('./config');
 const { Sequelize } = require('sequelize');
+const MAX_SIZE_UPLOAD_IMAGE = 5 * 1024 * 1024;
 
 const Users = sequelize.define("users", {
     id: {
@@ -20,7 +21,7 @@ const Users = sequelize.define("users", {
         type: Sequelize.STRING
     },
     avatar: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING(MAX_SIZE_UPLOAD_IMAGE)
     },
     city: {
         type: Sequelize.STRING
