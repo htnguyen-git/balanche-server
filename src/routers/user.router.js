@@ -9,8 +9,8 @@ router.use((req, res, next) => {
 });
 
 router.get('/', [auth.verifyToken, auth.isAdmin], userController.getAll);
-router.get('/activate/:id', userController.activate);
-router.get('/deactivate/:id', [auth.verifyToken, auth.isAdmin], userController.deactivate);
+router.post('/activate/', userController.activate);
+router.post('/deactivate/', [auth.verifyToken, auth.isAdmin], userController.deactivate);
 router.delete('/:id', [auth.verifyToken, auth.isAdmin], userController.remove);
 router.patch('/update', [auth.verifyToken, auth.isNormalUser], userController.update);
 router.patch('/changePassword', [auth.verifyToken, auth.isNormalUser], userController.changePassword)

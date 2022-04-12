@@ -14,20 +14,20 @@ const deactivate = async (req, res) => {
 }
 
 const getInfoFromRequest = (req) => {
-    const id = req.params.id;
-    return { id }
+    const ids = req.body.ids;
+    return { ids }
 }
 
-const executeQuery = async ({ id }) => {
+const executeQuery = async ({ ids }) => {
     const queryStr = 'UPDATE "users"'
         + ' SET "isActivate" = :isActivate '
-        + ' WHERE "id"=:id AND "deletedAt" IS NULL'
+        + ' WHERE "id" IN (:ids) AND "deletedAt" IS NULL'
         + ' RETURNING "id"'
         ;
     const [result, metadata] = await sequelize.query(queryStr, {
         replacements: {
             isActivate: 0,
-            id: id,
+            ids: ids,
         }
     })
     const isUpdateSuccessFully = result.length > 0;

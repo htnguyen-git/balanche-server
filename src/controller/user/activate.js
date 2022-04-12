@@ -14,20 +14,20 @@ const activate = async (req, res) => {
 }
 
 const getInfoFromRequest = (req) => {
-    const id = req.params.id;
-    return { id };
+    const ids = req.body.ids;
+    return { ids };
 }
 
-const executeQuery = async ({ id }) => {
+const executeQuery = async ({ ids }) => {
     const queryStr = 'UPDATE "users"'
         + ' SET "isActivate" = :isActivate'
-        + ' WHERE "id"=:id'
+        + ' WHERE "id" IN (:ids)'
         + ' AND "deletedAt" IS NULL'
-        + 'RETURNING "id"'
+        + ' RETURNING "id"'
         ;
     const [result, metadata] = await sequelize.query(queryStr, {
         replacements: {
-            id: id,
+            ids: ids,
             isActivate: 1
         }
     })
