@@ -1,7 +1,6 @@
 const { sequelize } = require('../../models/index');
 const { GETALL_ERROR } = require('./message');
 const getAll = async (req, res) => {
-    console.log("get all")
     try {
         const data = await executeQuery();
         return res.status(200).json({ data: data })
@@ -15,7 +14,7 @@ const getAll = async (req, res) => {
 // }
 
 const executeQuery = async () => {
-    const queryStr = 'SELECT "id", "avatar","firstName","lastName","email"'
+    const queryStr = 'SELECT "id", "avatar","firstName","lastName","email","isActivate"'
         + ' FROM "users"'
         + ' WHERE "deletedAt" IS NULL;'
         ;
