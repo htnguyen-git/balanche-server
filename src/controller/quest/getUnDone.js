@@ -2,7 +2,6 @@ const { sequelize } = require('../../models/index');
 const { ERROR_WHEN_GET_ALL_USER } = require('./msg');
 
 const getUnDone = async (req, res) => {
-    console.log("get undone")
     try {
         const getAllForm = getInfoFromQuery(req);
         const results = await executeQuery(getAllForm);
