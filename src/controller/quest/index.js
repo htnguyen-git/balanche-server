@@ -4,6 +4,8 @@ const add = require('./add');
 const update = require('./update');
 const remove = require('./remove');
 const markDone = require('./markDone');
+const importCSV = require('./importCSV');
+const exportCSV = require('./exportCSV');
 
 module.exports = {
     getAll,
@@ -12,4 +14,6 @@ module.exports = {
     update,
     remove,
     markDone,
+    importCSV,
+    exportCSV
 }

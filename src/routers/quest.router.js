@@ -13,8 +13,8 @@ router.get('/', [auth.verifyToken, auth.isNormalUser], questController.getAll);
 router.post('/', [auth.verifyToken, auth.isNormalUser], questController.add);
 router.patch('/:id', [auth.verifyToken, auth.isNormalUser], questController.update);
 router.delete('/', [auth.verifyToken, auth.isNormalUser], questController.remove);
-// router.get('/export', [auth.verifyToken, auth.isNormalUser], questController.exportQuest);
-// router.post('/import', [auth.verifyToken, auth.isNormalUser], questController.importQuest);
+router.get('/export/:fileName', [auth.verifyToken, auth.isNormalUser], questController.exportCSV); // add auth later
+router.post('/import', [auth.verifyToken, auth.isNormalUser], questController.importCSV);
 router.post('/markDone/', [auth.verifyToken, auth.isNormalUser], questController.markDone);
 router.get('/getUndone', [auth.verifyToken, auth.isNormalUser], questController.getUnDone);
 
