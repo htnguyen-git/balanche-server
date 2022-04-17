@@ -10,5 +10,7 @@ module.exports = {
     ERROR_WHEN_REMOVE: "Some error occured when remove quest",
     MARK_DONE_SUCCESS: "Mark quest as done success with id = ",
     MARK_DONE_FAIL: "Mark quest as done fail with id = ",
-    MARK_DONE_ERROR: "Some error occured when mark quest done"
+    MARK_DONE_ERROR: "Some error occured when mark quest done",
+    EXPORT_ERROR: "Some error occured when export quest",
+    IMPORT_ERROR: "Some error occured when import quest",
 };
