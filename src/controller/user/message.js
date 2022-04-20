@@ -14,5 +14,7 @@ module.exports = {
     UPDATE_ERROR: "Some error occured when update user",
     CHANGE_PWD_SUCCESS: "Change password successfully",
     CHANGE_PWD_FAIL: "Can not change password of user with id = ",
-    CHANGE_PWD_ERR: "Some error occured when change password of user"
+    CHANGE_PWD_ERR: "Some error occured when change password of user",
+    PASSWORD_WRONG: "Please check password",
+
 }
