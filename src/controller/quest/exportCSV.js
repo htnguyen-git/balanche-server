@@ -1,6 +1,6 @@
 const { sequelize } = require('../../models/index');
 const { EXPORT_ERROR } = require('./msg');
-
+const { jsonToCSV } = require('../../utilities/jsonCSVConverter')
 const exportCSV = async (req, res) => {
     try {
         const reqInfo = getInfoFromQuery(req);
@@ -34,15 +34,5 @@ const executeQuery = async ({ userId }) => {
     return results;
 };
 
-const jsonToCSV = (jsonFile = [{}]) => {
-    const json = jsonFile;
-    const header = Object.keys(json[0]);
-    const replacer = (key, value) => value === null ? "" : value;
-    const csv = [
-        header.join(','),
-        ...json.map(row => header.map(fieldName => JSON.stringify(row[fieldName], replacer)).join(','))
-    ].join('\r\n')
-    return csv;
-};
 
 module.exports = exportCSV;
