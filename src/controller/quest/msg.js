@@ -12,5 +12,8 @@ module.exports = {
     MARK_DONE_FAIL: "Mark quest as done fail with id = ",
     MARK_DONE_ERROR: "Some error occured when mark quest done",
     EXPORT_ERROR: "Some error occured when export quest",
+    IMPORT_SUCCESS: "record inserted",
+    IMPORT_FAIL: "Nothing to insert",
     IMPORT_ERROR: "Some error occured when import quest",
+
 };
