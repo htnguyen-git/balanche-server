@@ -2,14 +2,19 @@ const hashProvider = require('../../utilities/hashProvider');
 const { sequelize } = require("../../models/index");
 const { getCurrentDate } = require('../../utilities/date');
 const { REGISTER_SUCCESS, EMAIL_IS_TAKEN, ERROR_WHEN_REGISTER } = require('./message');
+const { transporter } = require('../../utilities/mail')
 
 const signUp = async (req, res) => {
+
     try {
         const signUpForm = getInfoFromRequest(req);
         const isAddSucessfully = await executeQuery(signUpForm);
-        return isAddSucessfully
-            ? res.status(201).json({ message: REGISTER_SUCCESS })
-            : res.status(409).json({ message: EMAIL_IS_TAKEN })
+        if (isAddSucessfully) {
+            await sendMail({ mailTo: signUpForm.email, linkActivate: getLinkActivateAccount() })
+            return res.status(201).json({ message: REGISTER_SUCCESS })
+        } else {
+            return res.status(409).json({ message: EMAIL_IS_TAKEN })
+        }
     } catch (error) {
         return res.status(500).json({ message: error.toString() || ERROR_WHEN_REGISTER })
     }
@@ -42,6 +47,19 @@ const executeQuery = async ({ email, password, firstName, lastName, name }) => {
         }
     });
     return metadata === 1;
+}
+
+const sendMail = async ({ mailTo, linkActivate }) => {
+    const info = await transporter.sendMail({
+        from: 'tfosorcim1994@outlook.com',
+        to: mailTo,
+        subject: "User Registeration",
+        text: `Please check ${linkActivate} to activate account`
+    })
+}
+
+const getLinkActivateAccount = () => {
+    return "https:activate.com"
 }
 
 module.exports = signUp;
