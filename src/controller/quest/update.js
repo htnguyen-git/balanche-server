@@ -5,8 +5,8 @@ const { ERROR_WHEN_UPDATE_QUEST, UPDATE_SUCCESS, UPDATE_FAIL } = require('./msg'
 const update = async (req, res) => {
     try {
         const updatedQuestForm = getInfoFromRequest(req);
-        const metadata = await executeQuery(updatedQuestForm);
-        const isUpdateSuccess = metadata && metadata.rowCount === 1;
+        const results = await executeQuery(updatedQuestForm);
+        const isUpdateSuccess = results.length > 0;
         return isUpdateSuccess
             ? res.status(200).json({ message: UPDATE_SUCCESS })
             : res.status(409).json({ message: UPDATE_FAIL })
@@ -42,6 +42,7 @@ const executeQuery = async ({ id, userId, title, group, startTime, endTime, plac
         + ' WHERE "id" =:id'
         + ' AND "userId" =:userId'
         + ' AND "deletedAt" IS NULL'
+        + ' RETURNING "id"'
         ;
     const [results, metadata] = await sequelize.query(queryStr, {
         replacements: {
@@ -58,7 +59,7 @@ const executeQuery = async ({ id, userId, title, group, startTime, endTime, plac
             userId: userId
         }
     });
-    return metadata;
+    return results;
 }
 
 module.exports = update;

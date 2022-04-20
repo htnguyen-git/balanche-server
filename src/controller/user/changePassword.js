@@ -5,7 +5,8 @@ const { CHANGE_PWD_SUCCESS, CHANGE_PWD_FAIL, CHANGE_PWD_ERR } = require('./messa
 const changePassword = async (req, res) => {
     try {
         const changePasswordForm = getInfoFromRequest(req);
-        const isUpdateSuccessfully = await executeQuery(changePasswordForm);
+        const results = await executeQuery(changePasswordForm);
+        const isUpdateSuccessfully = results.length > 0;
         return isUpdateSuccessfully
             ? res.status(200).json({ message: CHANGE_PWD_SUCCESS })
             : res.status(409).json({ message: CHANGE_PWD_FAIL })
@@ -25,6 +26,7 @@ const executeQuery = async ({ id, newPassword }) => {
         + ' SET password = :newPassword'
         + ' WHERE id = :id'
         + ' AND "isActivate" = 1'
+        + ' RETUNING "id"'
         ;
     const [results, metadata] = await sequelize.query(queryStr, {
         replacements: {
@@ -32,7 +34,7 @@ const executeQuery = async ({ id, newPassword }) => {
             newPassword: newPassword
         }
     });
-    return metadata.rowCount === 1;
+    return results;
 }
 
 module.exports = changePassword;

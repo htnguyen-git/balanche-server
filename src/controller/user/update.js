@@ -38,7 +38,8 @@ const executeQuery = async ({ id, name, firstName, lastName, avatar, city, count
         + '     "city"=:city, "country"=:country, "jobTitle"=:jobTitle, '
         + '     "email"=:email, "timeZone"=:timeZone, "phone"=:phone,'
         + '     "updatedAt"=:currentDate'
-        + ' WHERE "id"=:id AND "isActivate" = 1;'
+        + ' WHERE "id"=:id AND "isActivate" = 1'
+        + ' RETURNING "id"'
         ;
     const [results, metadata] = await sequelize.query(queryStr, {
         replacements: {
@@ -56,7 +57,7 @@ const executeQuery = async ({ id, name, firstName, lastName, avatar, city, count
             currentDate: getCurrentDate(),
         }
     });
-    return metadata.rowCount === 1;
+    return results.length > 0;
 }
 
 module.exports = update;

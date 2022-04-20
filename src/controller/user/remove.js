@@ -24,6 +24,7 @@ const executeQuery = async ({ id }) => {
     const queryStr = 'UPDATE "users"'
         + ' SET "deletedAt" = :currentDate '
         + ' WHERE "id"=:id AND "deletedAt" IS NULL'
+        + ' RETURNING "id"'
         ;
     const [result, metadata] = await sequelize.query(queryStr, {
         replacements: {
@@ -31,7 +32,7 @@ const executeQuery = async ({ id }) => {
             id: id,
         }
     })
-    const idDeletedSuccessfully = metadata.rowCount === 1;
+    const idDeletedSuccessfully = result.length > 0;
     return idDeletedSuccessfully;
 }
 

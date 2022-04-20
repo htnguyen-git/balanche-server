@@ -6,7 +6,7 @@ const add = async (req, res) => {
     const addQuestForm = getInfoFromRequest(req)
     try {
         const records = await executeQuery(addQuestForm);
-        return res.status(201).json({ message: records + " " + RECORD_INSERTED });
+        return res.status(201).json({ message: records.length + " " + RECORD_INSERTED });
     } catch (error) {
         return res.status(500).json({ message: error.toString() || ERROR_WHEN_ADD_QUEST });
     }
@@ -25,6 +25,7 @@ const executeQuery = async ({ userId, quests }) => {
         + quests.map(quest => {
             return `( DEFAULT, :userId, '${quest.title}','${quest.group}', '${quest.startTime}', '${quest.endTime}', '${quest.place}', '${quest.howToComPlete}', NULL, NULL, :currentDate, :currentDate)`
         })
+        + ' RETURNING "id"'
         + ';';
     const [results, records] = await sequelize.query(queryStr, {
         replacements: {
@@ -32,7 +33,7 @@ const executeQuery = async ({ userId, quests }) => {
             currentDate: getCurrentDate()
         }
     });
-    return records;
+    return results;
 };
 
 module.exports = add;
