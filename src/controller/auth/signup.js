@@ -11,8 +11,7 @@ const signUp = async (req, res) => {
         const isAddSucessfully = await executeQuery(signUpForm);
         if (isAddSucessfully) {
             // const info = await sendMail({ mailTo: signUpForm.email, linkActivate: getLinkActivateAccount() })
-            // return res.status(201).json({ message: REGISTER_SUCCESS })
-            return res.status(201).json({ service: process.env.MAIL_SERVICE, user: process.env.MAIL_USER, password: process.env.MAIL_PASSWORD })
+            return res.status(201).json({ message: REGISTER_SUCCESS })
         } else {
             return res.status(409).json({ message: EMAIL_IS_TAKEN })
         }
