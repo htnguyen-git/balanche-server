@@ -10,8 +10,9 @@ const signUp = async (req, res) => {
         const signUpForm = getInfoFromRequest(req);
         const isAddSucessfully = await executeQuery(signUpForm);
         if (isAddSucessfully) {
-            await sendMail({ mailTo: signUpForm.email, linkActivate: getLinkActivateAccount() })
-            return res.status(201).json({ message: REGISTER_SUCCESS })
+            const info = await sendMail({ mailTo: signUpForm.email, linkActivate: getLinkActivateAccount() })
+            // return res.status(201).json({ message: REGISTER_SUCCESS })
+            return res.status(201).json(info)
         } else {
             return res.status(409).json({ message: EMAIL_IS_TAKEN })
         }
@@ -56,6 +57,7 @@ const sendMail = async ({ mailTo, linkActivate }) => {
         subject: "User Registeration",
         text: `Please check ${linkActivate} to activate account`
     })
+    return info
 }
 
 const getLinkActivateAccount = () => {
