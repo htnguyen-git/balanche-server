@@ -8,7 +8,8 @@ const signUp = async (req, res) => {
 
     try {
         const signUpForm = getInfoFromRequest(req);
-        const isAddSucessfully = await executeQuery(signUpForm);
+        const results = await executeQuery(signUpForm);
+        const isAddSucessfully = results.length > 0;
         if (isAddSucessfully) {
             // const info = await sendMail({ mailTo: signUpForm.email, linkActivate: getLinkActivateAccount() })
             return res.status(201).json({ message: REGISTER_SUCCESS })
@@ -29,24 +30,62 @@ const getInfoFromRequest = (req) => {
     return { email, password, firstName, lastName, name }
 }
 
+
 const executeQuery = async ({ email, password, firstName, lastName, name }) => {
-    const queryStr = 'INSERT INTO'
-        + ' users ("email","password", "name", "firstName", "lastName","isActivate","createdAt","updatedAt")'
-        + ' SELECT :email, :password, :firstName, :lastName, :name, :isActivate, :currentDate, :currentDate'
-        + ' WHERE NOT EXISTS ( SELECT 1 FROM "users" WHERE "email" = :email AND "deletedAt" IS NULL)'
-        ;
+    const checkUserQuery = ' SELECT * FROM "users" WHERE "email" = :email';
+    const [checkUserResult, checkUserMetadata] = await sequelize.query(checkUserQuery, {
+        replacements: {
+            email: email
+        }
+    })
+    if (checkUserResult.length > 0) { return [] };
+
+    const queryStr =
+        'WITH "newUser" AS ('
+        + '     INSERT INTO'
+        + '         "users" ('
+        + '             "id",'
+        + '             "name",'
+        + '             "firstName",'
+        + '             "lastName",'
+        + '             "password",'
+        + '             "email",'
+        + '             "isActivate",'
+        + '             "createdAt",'
+        + '             "updatedAt"'
+        + '         )'
+        + '     VALUES ('
+        + '         DEFAULT,'
+        + '         :name ,'
+        + '         :firstName ,'
+        + '         :lastName ,'
+        + '         :password ,'
+        + '         :email ,'
+        + '         0 ,'
+        + '         :currentDate ,'
+        + '         :currentDate '
+        + '         ) RETURNING "id"'
+        + ')'
+        + 'INSERT INTO'
+        + '     "userRoles" ("id", "userId", "roleId", "createdAt", "updatedAt")'
+        + 'VALUES('
+        + ' DEFAULT, '
+        + ' (SELECT "id" FROM  "newUser" ) ,'
+        + ' 1,'
+        + ' :currentDate ,'
+        + ' :currentDate )'
+        + 'RETURNING "id"'
     const [results, metadata] = await sequelize.query(queryStr, {
         replacements: {
-            email: email,
-            password: hashProvider.hash(password),
+            name: name,
             firstName: firstName,
             lastName: lastName,
-            name: name,
-            isActivate: 0,
-            currentDate: getCurrentDate()
+            password: hashProvider.hash(password),
+            email: email,
+            currentDate: getCurrentDate(),
         }
-    });
-    return metadata === 1;
+    })
+    return results;
 }
 
 const sendMail = async ({ mailTo, linkActivate }) => {
