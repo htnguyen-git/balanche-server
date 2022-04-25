@@ -61,7 +61,7 @@ const executeQuery = async ({ email, password, firstName, lastName, name }) => {
         + '         :lastName ,'
         + '         :password ,'
         + '         :email ,'
-        + '         0 ,'
+        + '         :isActivate ,'
         + '         :currentDate ,'
         + '         :currentDate '
         + '         ) RETURNING "id"'
@@ -82,6 +82,7 @@ const executeQuery = async ({ email, password, firstName, lastName, name }) => {
             lastName: lastName,
             password: hashProvider.hash(password),
             email: email,
+            isActivate: 1,
             currentDate: getCurrentDate(),
         }
     })
