@@ -14,11 +14,13 @@ const getAll = async (req, res) => {
 // }
 
 const executeQuery = async () => {
-    const queryStr = 'SELECT "users"."id", "avatar","firstName","lastName","email","isActivate", ARRAY_AGG("roles"."name") as roles'
+    const queryStr = 'SELECT DISTINCT "users"."id", "avatar","firstName","lastName","email","isActivate", ARRAY_AGG("roles"."name") as roles'
         + ' FROM "userRoles"'
         + ' INNER JOIN "users" ON "userRoles"."userId" = "users"."id"'
         + ' INNER JOIN "roles" ON "userRoles"."roleId" = "roles"."id"'
         + ' WHERE "users"."deletedAt" IS NULL'
+        + ' AND "userRoles"."deletedAt" IS NULL'
+        + ' AND "roles"."deletedAt" IS NULL'
         + ' GROUP BY "users"."id"'
         ;
     const [result, metadata] = await sequelize.query(queryStr);
