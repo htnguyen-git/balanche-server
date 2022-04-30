@@ -8,10 +8,6 @@ const seed = () => {
         },
         {
             userId: 2,
-            roleId: 1
-        },
-        {
-            userId: 2,
             roleId: 2
         }
     ]).then(() => console.log("seed userRoles complete"))
