@@ -5,6 +5,7 @@ const remove = require('./remove');
 const update = require('./update');
 const changePassword = require('./changePassword');
 const getFullInfo = require('./getFullInfo');
+const statisticalCountUser = require('./statistical-count-user');
 
 module.exports = {
     getAll,
@@ -14,4 +15,5 @@ module.exports = {
     update,
     changePassword,
     getFullInfo,
+    statisticalCountUser
 }

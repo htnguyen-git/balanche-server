@@ -15,5 +15,6 @@ router.delete('/:id', [auth.verifyToken, auth.isAdmin], userController.remove);
 router.patch('/update', [auth.verifyToken, auth.isNormalUser], userController.update);
 router.patch('/changePassword', [auth.verifyToken, auth.isNormalUser], userController.changePassword)
 router.get('/getFullInfo', [auth.verifyToken], userController.getFullInfo);
+router.get('/statitis-count-user', [auth.verifyToken, auth.isAdmin], userController.statisticalCountUser);
 
 module.exports = router;

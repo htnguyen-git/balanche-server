@@ -16,5 +16,6 @@ module.exports = {
     CHANGE_PWD_FAIL: "Can not change password of user with id = ",
     CHANGE_PWD_ERR: "Some error occured when change password of user",
     PASSWORD_WRONG: "Please check password",
-
+    STATITIS_FAIL: "Nothing to statitic",
+    STATITIS_ERROR: "Some error occured when statitis user"
 }
