@@ -9,6 +9,18 @@ const seed = () => {
         {
             userId: 2,
             roleId: 2
+        },
+        {
+            userId: 3,
+            roleId: 1
+        },
+        {
+            userId: 4,
+            roleId: 1
+        },
+        {
+            userId: 5,
+            roleId: 1
         }
     ]).then(() => console.log("seed userRoles complete"))
 };
