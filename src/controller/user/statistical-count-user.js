@@ -3,8 +3,7 @@ const { STATITIS_FAIL, STATITIS_ERROR } = require('./message');
 
 const statisticalCountUser = async (req, res) => {
     try {
-        const countUserForm = getInfoFromRequest(req);
-        const response = await executeQuery(countUserForm);
+        const response = await executeQuery();
         const isStatitisSuccesfull = response.length > 0;
         return isStatitisSuccesfull
             ? res.status(200).json({ data: response[0] })
@@ -14,12 +13,8 @@ const statisticalCountUser = async (req, res) => {
     }
 }
 
-const getInfoFromRequest = (req) => {
-    const ids = req.body.ids;
-    return { ids }
-}
 
-const executeQuery = async ({ ids }) => {
+const executeQuery = async () => {
     const queryStr =
         'SELECT'
         + '     COUNT("id") as TOTAL,'
