@@ -16,5 +16,6 @@ router.patch('/update', [auth.verifyToken, auth.isNormalUser], userController.up
 router.patch('/changePassword', [auth.verifyToken, auth.isNormalUser], userController.changePassword)
 router.get('/getFullInfo', [auth.verifyToken], userController.getFullInfo);
 router.get('/statitis-count-user', [auth.verifyToken, auth.isAdmin], userController.statisticalCountUser);
+router.get('/statitis-growth-user', [auth.verifyToken, auth.isAdmin], userController.statitisGrowthUser);
 
 module.exports = router;
