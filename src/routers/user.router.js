@@ -12,7 +12,7 @@ router.get('/', [auth.verifyToken, auth.isAdmin], userController.getAll);
 router.post('/activate/', userController.activate);
 router.post('/deactivate/', [auth.verifyToken, auth.isAdmin], userController.deactivate);
 router.delete('/:id', [auth.verifyToken, auth.isAdmin], userController.remove);
-router.patch('/update', [auth.verifyToken, auth.isNormalUser], userController.update);
+router.patch('/update', [auth.verifyToken], userController.update);
 router.patch('/changePassword', [auth.verifyToken, auth.isNormalUser], userController.changePassword)
 router.get('/getFullInfo', [auth.verifyToken], userController.getFullInfo);
 router.get('/statitis-count-user', [auth.verifyToken, auth.isAdmin], userController.statisticalCountUser);
