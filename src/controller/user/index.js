@@ -7,7 +7,7 @@ const changePassword = require('./changePassword');
 const getFullInfo = require('./getFullInfo');
 const statisticalCountUser = require('./statistical-count-user');
 const statitisGrowthUser = require('./statitis-growth-user');
-
+const statitisRoleUser = require('./statitis-role-user');
 module.exports = {
     getAll,
     activate,
@@ -17,5 +17,6 @@ module.exports = {
     changePassword,
     getFullInfo,
     statisticalCountUser,
-    statitisGrowthUser
+    statitisGrowthUser,
+    statitisRoleUser
 }
