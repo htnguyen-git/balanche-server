@@ -10,8 +10,9 @@ const signUp = async (req, res) => {
         const signUpForm = getInfoFromRequest(req);
         const results = await executeQuery(signUpForm);
         const isAddSucessfully = results.length > 0;
+        console.log(results)
         if (isAddSucessfully) {
-            // const info = await sendMail({ mailTo: signUpForm.email, linkActivate: getLinkActivateAccount() })
+            await sendMail({ mailTo: signUpForm.email, userId: results[0].id })
             return res.status(201).json({ message: REGISTER_SUCCESS })
         } else {
             return res.status(409).json({ message: EMAIL_IS_TAKEN })
@@ -89,12 +90,12 @@ const executeQuery = async ({ email, password, firstName, lastName, name }) => {
     return results;
 }
 
-const sendMail = async ({ mailTo, linkActivate }) => {
+const sendMail = async ({ mailTo, userId }) => {
     const info = await transporter.sendMail({
         from: 'tfosorcim1994@outlook.com',
         to: mailTo,
         subject: "User Registeration",
-        text: `Please check ${linkActivate} to activate account`
+        text: `Please check https://balanche.herokuapp.com/register-status?userId=${userId} to activate account`
     })
     return info
 }
