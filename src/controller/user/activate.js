@@ -7,7 +7,7 @@ const activate = async (req, res) => {
         const isActivateSuccessfully = await executeQuery(activateForm);
         return isActivateSuccessfully
             ? res.status(200).json({ message: ACTIVATE_SUCCESS })
-            : res.status(409).json({ message: ACTIVATE_FAIL + activateForm.id })
+            : res.status(409).json({ message: ACTIVATE_FAIL + activateForm.ids })
     } catch (error) {
         return res.status(500).json({ message: error.toString() || ACTIVATE_ERROR })
     }
